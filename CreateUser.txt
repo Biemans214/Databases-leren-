@@ -1,0 +1,62 @@
+use MBO_ICT;
+
+create user EXTR1@'%' identified by 'Paswoord123'
+
+GRANT select, insert, update, delete on cijfers to EXTR1@'%';
+GRANT select, insert, update, delete on docenten to EXTR1@'%';
+GRANT select, insert, update, delete on  docentvakken to EXTR1@'%';
+GRANT select, insert, update, delete on klassen to EXTR1@'%';
+GRANT select, insert, update, delete on lokalen to EXTR1@'%';
+GRANT select, insert, update, delete on rooster to EXTR1@'%';
+GRANT select, insert, update, delete on studenten to EXTR1@'%';
+GRANT select, insert, update, delete on toetsen to EXTR1@'%';
+GRANT select, insert, update, delete on vakken to EXTR1@'%';
+
+
+
+#________________________________________________________
+
+select * from studenten;
+
+#________________________________________________________
+
+select Studentnummer, Voornaam, Tussenvoegsel, Achternaam, klas from studenten;
+
+#________________________________________________________
+
+select Studentnummer, Voornaam, Tussenvoegsel, Achternaam, klas from studenten order by klas, Achternaam;
+
+#________________________________________________________
+
+select Studentnummer, Voornaam, Tussenvoegsel, Achternaam, klas from studenten where klas like '1%' order by klas, Achternaam;
+
+#________________________________________________________
+
+select docentnummer, voornaam, tussenvoegsel, achternaam from docenten where Docentnummer in (select Docentnummer from docentvakken where VakCode = 'DBASE');
+
+select docentnummer, voornaam, tussenvoegsel, achternaam from docenten where Docentnummer = 1 or Docentnummer = 13;
+
+select * from vakken;
+
+(select * from docentvakken where VakCode = 'DBASE');
+
+select docenten.docentnummer, voornaam, tussenvoegsel, achternaam from docenten inner join docentvakken
+on docenten.docentnummer = docentvakken.docentnummer
+where vakcode = 'DBASE';
+
+
+#________________________________________________________
+
+select docenten.docentnummer, voornaam, tussenvoegsel, achternaam from docenten inner join docentvakken
+on docenten.docentnummer = docentvakken.docentnummer
+where vakcode = 'DBASE' and Geslacht = 'V';
+
+#________________________________________________________
+
+select klassen.klas, docenten.Voornaam, docenten.tussenvoegsel, docenten.achternaam from docenten left outer join klassen
+on docenten.docentnummer = klassen.docentnummer
+where klassen.DocentNummer is null;
+
+#________________________________________________________
+
+INSERT INTO Studenten (Studentnummer,Voornaam,Tussenvoegsel,Achternaam,Geslacht,Straatnaam,Huisnummer,Postcode,Woonplaats,Geboortedatum,Geboorteplaats,Klas) VALUES (296,'Piet','','Mondriaan','M','Kerkstraat',12,'1234 AB','Den Haag','2001-03-17','Den Haag','3B');
