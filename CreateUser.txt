@@ -1,62 +1,83 @@
-use MBO_ICT;
+Create account
 
-create user EXTR1@'%' identified by 'Paswoord123'
+Create a new user who can log in to the database from any host, with login name USER1 and think of a password yourself. Make sure that this user can execute SELECT, INSERT, UPDATE and DELETE commands on all tables except the Salaries table. Put all SQL commands you need for this as well as a screen print of the execution in the Word document.
 
-GRANT select, insert, update, delete on cijfers to EXTR1@'%';
-GRANT select, insert, update, delete on docenten to EXTR1@'%';
-GRANT select, insert, update, delete on  docentvakken to EXTR1@'%';
-GRANT select, insert, update, delete on klassen to EXTR1@'%';
-GRANT select, insert, update, delete on lokalen to EXTR1@'%';
-GRANT select, insert, update, delete on rooster to EXTR1@'%';
-GRANT select, insert, update, delete on studenten to EXTR1@'%';
-GRANT select, insert, update, delete on toetsen to EXTR1@'%';
-GRANT select, insert, update, delete on vakken to EXTR1@'%';
+use <youdataname>;
 
+create user USER1@'%' identified by 'Paswoord123'
 
+GRANT select, insert, update, delete on cijfers to USER1@'%';
+GRANT select, insert, update, delete on docenten to USER1@'%';
+GRANT select, insert, update, delete on  docentvakken to USER1@'%';
+GRANT select, insert, update, delete on klassen to USER1@'%';
+GRANT select, insert, update, delete on lokalen to USER1@'%';
+GRANT select, insert, update, delete on rooster to USER1@'%';
+GRANT select, insert, update, delete on studenten to USER1@'%';
+GRANT select, insert, update, delete on toetsen to USER1@'%';
+GRANT select, insert, update, delete on vakken to USER1@'%';
 
 #________________________________________________________
+Creating queries
+
+You create the queries in the Workbench. There are two categories of queries, simple and complex.
+Put all the SQL commands you need for this as well as a screen print of the execution in the Word document.
+
+Simple:
+
+1.Select all data from the Students table.
 
 select * from studenten;
 
 #________________________________________________________
+2.Select Student Number, First Name, Middle Name, Last Name and Class from the Students table.
 
 select Studentnummer, Voornaam, Tussenvoegsel, Achternaam, klas from studenten;
 
 #________________________________________________________
+3.Select StudentNumber, FirstName, MiddleName, LastName and Class from the Students table, sort by Class and then by LastName.
 
 select Studentnummer, Voornaam, Tussenvoegsel, Achternaam, klas from studenten order by klas, Achternaam;
 
 #________________________________________________________
+4.Select StudentNumber, FirstName, MiddleName, LastName, and Class from the Students table, show only the classes starting with the letter “1”, sort by Class, and then by LastName.
 
 select Studentnummer, Voornaam, Tussenvoegsel, Achternaam, klas from studenten where klas like '1%' order by klas, Achternaam;
 
 #________________________________________________________
+5.Complex:
 
-select docentnummer, voornaam, tussenvoegsel, achternaam from docenten where Docentnummer in (select Docentnummer from docentvakken where VakCode = 'DBASE');
+Select the teacher number, first name, middle name and last name from the table Teachers who teach the subject with subject code DATA.
 
-select docentnummer, voornaam, tussenvoegsel, achternaam from docenten where Docentnummer = 1 or Docentnummer = 13;
+select docentnummer, voornaam, tussenvoegsel, achternaam from docenten where Docentnummer in (select Docentnummer from docentvakken where VakCode = 'DATA');
+
+select docentnummer, voornaam, tussenvoegsel, achternaam from docenten where Docentnummer = <number> or Docentnummer = <number>;
 
 select * from vakken;
 
-(select * from docentvakken where VakCode = 'DBASE');
+(select * from docentvakken where VakCode = 'DATA');
 
 select docenten.docentnummer, voornaam, tussenvoegsel, achternaam from docenten inner join docentvakken
 on docenten.docentnummer = docentvakken.docentnummer
-where vakcode = 'DBASE';
+where vakcode = 'DATA';
 
 
 #________________________________________________________
+6.Select the teacher number, first name, middle name and last name of all female teachers from the table Teachers who teach the subject with subject code DATA.
 
 select docenten.docentnummer, voornaam, tussenvoegsel, achternaam from docenten inner join docentvakken
 on docenten.docentnummer = docentvakken.docentnummer
-where vakcode = 'DBASE' and Geslacht = 'V';
+where vakcode = 'DATA' and Geslacht = 'V';
 
 #________________________________________________________
+7.Select the class, first name, middle name and last name of all teachers who are not docentnummer of a class.
 
 select klassen.klas, docenten.Voornaam, docenten.tussenvoegsel, docenten.achternaam from docenten left outer join klassen
 on docenten.docentnummer = klassen.docentnummer
 where klassen.DocentNummer is null;
 
 #________________________________________________________
+Add data
 
-INSERT INTO Studenten (Studentnummer,Voornaam,Tussenvoegsel,Achternaam,Geslacht,Straatnaam,Huisnummer,Postcode,Woonplaats,Geboortedatum,Geboorteplaats,Klas) VALUES (296,'Piet','','Mondriaan','M','Kerkstraat',12,'1234 AB','Den Haag','2001-03-17','Den Haag','3B');
+Add a new student to the Students table and create your own data for this student.
+
+INSERT INTO Studenten (Studentnummer,Voornaam,Tussenvoegsel,Achternaam,Geslacht,Straatnaam,Huisnummer,Postcode,Woonplaats,Geboortedatum,Geboorteplaats,Klas) VALUES (,'','','Mondriaan','M','',,'','','','','');
