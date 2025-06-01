@@ -1,6 +1,8 @@
 Create account
 
-Create a new user who can log in to the database from any host, with login name USER1 and think of a password yourself. Make sure that this user can execute SELECT, INSERT, UPDATE and DELETE commands on all tables except the Salaries table. Put all SQL commands you need for this as well as a screen print of the execution in the Word document.
+Create a new user who can log in to the database from any host, with login name USER1 and think of a password yourself. 
+Make sure that this user can execute SELECT, INSERT, UPDATE and DELETE commands on all tables except the Salaries table. 
+Put all SQL commands you need for this as well as a screen print of the execution in the Word document.
 
 use <youdataname>;
 
@@ -16,7 +18,7 @@ GRANT select, insert, update, delete on studenten to USER1@'%';
 GRANT select, insert, update, delete on toetsen to USER1@'%';
 GRANT select, insert, update, delete on vakken to USER1@'%';
 
-#________________________________________________________
+#################################################################################################################
 Creating queries
 
 You create the queries in the Workbench. There are two categories of queries, simple and complex.
@@ -28,22 +30,22 @@ Simple:
 
 select * from studenten;
 
-#________________________________________________________
+#################################################################################################################
 2.Select Student Number, First Name, Middle Name, Last Name and Class from the Students table.
 
 select Studentnummer, Voornaam, Tussenvoegsel, Achternaam, klas from studenten;
 
-#________________________________________________________
+#################################################################################################################
 3.Select StudentNumber, FirstName, MiddleName, LastName and Class from the Students table, sort by Class and then by LastName.
 
 select Studentnummer, Voornaam, Tussenvoegsel, Achternaam, klas from studenten order by klas, Achternaam;
 
-#________________________________________________________
+#################################################################################################################
 4.Select StudentNumber, FirstName, MiddleName, LastName, and Class from the Students table, show only the classes starting with the letter “1”, sort by Class, and then by LastName.
 
 select Studentnummer, Voornaam, Tussenvoegsel, Achternaam, klas from studenten where klas like '1%' order by klas, Achternaam;
 
-#________________________________________________________
+#################################################################################################################
 5.Complex:
 
 Select the teacher number, first name, middle name and last name from the table Teachers who teach the subject with subject code DATA.
@@ -61,21 +63,21 @@ on docenten.docentnummer = docentvakken.docentnummer
 where vakcode = 'DATA';
 
 
-#________________________________________________________
+#################################################################################################################
 6.Select the teacher number, first name, middle name and last name of all female teachers from the table Teachers who teach the subject with subject code DATA.
 
 select docenten.docentnummer, voornaam, tussenvoegsel, achternaam from docenten inner join docentvakken
 on docenten.docentnummer = docentvakken.docentnummer
 where vakcode = 'DATA' and Geslacht = 'V';
 
-#________________________________________________________
+#################################################################################################################
 7.Select the class, first name, middle name and last name of all teachers who are not docentnummer of a class.
 
 select klassen.klas, docenten.Voornaam, docenten.tussenvoegsel, docenten.achternaam from docenten left outer join klassen
 on docenten.docentnummer = klassen.docentnummer
 where klassen.DocentNummer is null;
 
-#________________________________________________________
+#################################################################################################################
 Add data
 
 Add a new student to the Students table and create your own data for this student.
