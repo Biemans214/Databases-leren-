@@ -1,0 +1,31 @@
+Select the city and teacher number from the Teachers table and sort the
+result first by City and then by Teacher Number.
+
+
+SELECT Woonplaats, DocentNummer FROM Docenten ORDER BY Woonplaats, 
+DocentNummer;
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Select the places of residence and the number of teachers living in the places of residence in question from the Teachers table. 
+Rename the column name with the number of teachers per place of residence to TeachersPerPlace of Residence.
+
+
+SELECT Woonplaats, COUNT(DocentNummer) AS DocentenPerWoonplaats FROM 
+Docenten GROUP BY Woonplaats;
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Select the city and the number of teachers living in the respective cities
+from the Teachers table where the number of teachers in the respective city
+is greater than one. Rename the column name with the number of teachers per city
+to TeachersPerCity.
+
+
+SELECT Woonplaats, COUNT(DocentNummer) AS DocentenPerWoonplaats FROM 
+Docenten GROUP BY Woonplaats HAVING DocentenPerWoonplaats > 1;
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Select the teachernumber and salary from the Salaries table of the teachers who have the highest salary of all teachers.
+
+SELECT DocentNummer, Voornaam, Tussenvoegsel, Achternaam FROM Docenten 
+WHERE DocentNummer IN (SELECT DocentNummer FROM Salarissen WHERE Salaris 
+= (SELECT MAX(Salaris) FROM Salarissen));

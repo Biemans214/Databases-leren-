@@ -1,0 +1,33 @@
+Select the teacher number and salary from the Salaries table, where the salary is between 100 and 200 euros. 
+Rename the column name Teachernumber to DATASALA.
+
+
+SELECT Docentnummer AS DATASALA, Salaris FROM Salarissen WHERE Salaris BETWEEN 100 AND 200;
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Select the salary and then the teacher number from the Salaries table and sort the result by Salary, 
+with the highest salary at the top of the list.
+
+ELECT Salaris, Docentnummer FROM Salarissen ORDER BY Salaris DESC;
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Select the minimum salary, maximum salary, and average salary from the Salaries table and rename the column headings to Minimum,
+Maximum, and Average respectively.
+
+SELECT MIN(Salaris) AS Minimum, MAX(Salaris) AS Maximum, AVG(Salaris) AS Gemiddeld FROM Salarissen;
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

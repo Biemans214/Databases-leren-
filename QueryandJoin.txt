@@ -1,0 +1,96 @@
+Then create a new user who can only log in to the database after
+first logging in to the local host in Windows, with login name DATA and think of a
+password yourself.
+Make sure that this user can execute SELECT, INSERT, UPDATE and DELETE commands
+on the tables Tests and Grades and can only execute SELECT commands on the tables
+Teachers, TeacherSubjects, Classes, Rooms, Schedule, Students and Subjects. 
+
+
+USE <YouDatabases>;
+CREATE USER EXTR2@localhost IDENTIFIED BY 'DitishetPaswoord';
+GRANT SELECT, INSERT, UPDATE, DELETE ON Toetsen TO DATA@localhost;
+GRANT SELECT, INSERT, UPDATE, DELETE ON Cijfers TO DATA@localhost;
+GRANT SELECT ON Docenten TO DATA@localhost;
+GRANT SELECT ON DocentVakken TO DATA@localhost;
+GRANT SELECT ON Klassen TO DATA@localhost;
+GRANT SELECT ON Lokalen TO DATA@localhost;
+GRANT SELECT ON Rooster TO DATA@localhost;
+GRANT SELECT ON Studenten TO DATA@localhost;
+GRANT SELECT ON Vakken TO DATA@localhost;
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Select StudentNumber and Grade from the Grades table for the VQ1 test 
+(period 2 test of 1st year of study for the subject databases).
+
+SELECT StudentNummer, Cijfer FROM Cijfers WHERE ToetsCode = 'VQ1';
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Select StudentNumber and Grade from the Grades table for the VQ1 test 
+(period 2 test of the 1st year of study for the subject databases).
+
+SELECT StudentNummer, Cijfer FROM Cijfers WHERE ToetsCode = 'DBASEL1P2';
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Select StudentNumber and Grade from the Grades table for the VQ1 test
+(period 2 test of 1st year of study for the subject databases). Sort the result first by
+grade (highest grade above and then descending) and then by StudentNumber (lowest
+student number above and then ascending).
+
+SELECT StudentNummer, Cijfer FROM Cijfers WHERE ToetsCode = 'VQ1' 
+ORDER BY Cijfer DESC, StudentNummer ASC;
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Select the lowest grade, the highest grade and the average grade from the Grades table
+for the VQ1 test (period 2 test of the 1st year of study for the databases subject).
+Rename the column header successively to MinGrade, MaxGrade and
+AvgGrade.
+
+
+SELECT MIN(Cijfer) AS MinCijfer, MAX(Cijfer) AS MaxCijfer, AVG(Cijfer) AS GemCijfer 
+FROM Cijfers WHERE ToetsCode = 'VQ1';
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Select the student number, first name, prefix and last name from the table Students who received a grade 6 for the VQ1 test.
+
+Query:
+
+SELECT StudentNummer, Voornaam, Tussenvoegsel, Achternaam FROM Studenten 
+WHERE StudentNummer IN
+(SELECT StudentNummer FROM Cijfers WHERE ToetsCode = 'VQ1' AND Cijfer 
+= 6);
+
+Join:
+
+SELECT Studenten.StudentNummer, Voornaam, Tussenvoegsel, Achternaam FROM 
+Studenten INNER JOIN Cijfers ON Studenten.StudentNummer = 
+Cijfers.StudentNummer WHERE ToetsCode = 'VQ1' AND Cijfer = 6;
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Select all data from the Tests table for which no grades have been entered in the Grades table.
+
+Query:
+
+SELECT * FROM Toetsen WHERE ToetsCode NOT IN (SELECT ToetsCode FROM 
+CIjfers);
+
+Join:
+
+SELECT Toetsen.* FROM Toetsen LEFT OUTER JOIN Cijfers ON Toetsen.ToetsCode = 
+Cijfers.ToetsCode WHERE Cijfers.ToetsCode IS NULL;
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Select all data from the Grades table for students who received a lower grade for the VQ1 test than the average for the VQ1 test.
+
+SELECT * FROM Cijfers WHERE ToetsCode = 'VQ1' AND Cijfer < ( SELECT 
+AVG(Cijfer) FROM Cijfers WHERE ToetsCode = 'VQ1');
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+In the Grades table, change the grade obtained for the VQ1 test by the student with
+student number 20 to the grade 5.5.
+
+Remove from the Grades table the row with the data for the VQ1 test of the student
+with student number 10;
+
+UPDATE Cijfers SET Cijfer = 5.5 WHERE ToetsCode = 'VQ1' AND Studentnummer = 20;
+
+DELETE FROM Cijfers WHERE ToetsCode = 'VQ1' AND Studentnummer = 10;
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
